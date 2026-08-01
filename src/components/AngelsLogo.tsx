@@ -9,7 +9,7 @@ interface LogoProps {
   onDark?: boolean;
 }
 
-const HEIGHTS = { sm: 40, md: 52, lg: 72 } as const;
+const HEIGHTS = { sm: 48, md: 72, lg: 96 } as const;
 
 export default function AngelsLogo({ size = "md", onDark = false }: LogoProps) {
   const height = HEIGHTS[size];

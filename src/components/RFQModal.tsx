@@ -95,14 +95,15 @@ export default function RFQModal() {
                   <Phone className="w-5 h-5 text-amber-400 shrink-0" />
                   <div>
                     <p className="font-semibold">Call Support</p>
-                    <p className="text-blue-200">+91-98100-XXXXX</p>
+                    <p className="text-blue-200">+91-97605-77862</p>
+                    <p className="text-blue-200">+91-94121-31200</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <Mail className="w-5 h-5 text-amber-400 shrink-0" />
                   <div>
                     <p className="font-semibold">Email Us</p>
-                    <p className="text-blue-200">sales@angelsinstruments.com</p>
+                    <p className="text-blue-200 break-all">info@angelsinstruments.in</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
