@@ -34,7 +34,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Brand Info */}
         <div className="space-y-4">
-          <AngelsLogo size="md" showText={true} />
+          <AngelsLogo size="md" onDark />
           <p className="text-slate-400 text-xs leading-relaxed">
             Manufacturer &amp; Exporter of Pulp, Paper, Board, Packaging, Surface Coating, Textile, and Pharma Lab Testing Instruments. An NS-EN ISO 9001:2008 Certified Company from KVQA, Norway.
           </p>
