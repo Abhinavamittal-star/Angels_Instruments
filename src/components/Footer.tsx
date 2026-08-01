@@ -67,6 +67,7 @@ export default function Footer() {
               { label: "About Us / Profile", href: "/about" },
               { label: "Full Product Catalog", href: "/products" },
               { label: "Pilot Scale Plants", href: "/pilot-plants" },
+              { label: "Clientele / Reputed Clients", href: "/clientele" },
               { label: "Achievements & ISO", href: "/achievements" },
               { label: "Contact Us", href: "/contact" },
             ].map((link) => (
