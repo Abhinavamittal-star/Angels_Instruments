@@ -197,21 +197,24 @@ export default function ContactPage() {
               )}
             </div>
 
-            {/* Map mockup with real Saharanpur coordinates */}
-            <div className="border border-slate-100 rounded-2xl overflow-hidden relative h-[200px] bg-slate-950 flex flex-col justify-end p-4">
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-35" />
-              <div className="absolute top-[40%] left-[55%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                <div className="w-4 h-4 bg-amber-500 rounded-full animate-ping absolute" />
-                <div className="w-3.5 h-3.5 bg-amber-500 rounded-full border border-white relative z-10" />
-                <span className="text-3xs font-extrabold text-white bg-slate-900/90 border border-slate-800 px-2 py-0.5 rounded shadow mt-1 whitespace-nowrap">ANGELS INSTRUMENTS</span>
-              </div>
-              <div className="relative z-10 bg-slate-900/90 border border-slate-800 p-3 rounded-xl flex justify-between items-center text-white">
-                <div className="space-y-0.5">
-                  <p className="text-2xs font-extrabold tracking-wide uppercase text-amber-400">Saharanpur, U.P. India</p>
-                  <p className="text-3xs text-slate-300">Sahin Bagh &amp; Chilkana Road Factory</p>
-                </div>
-                <div className="text-3xs text-slate-500 text-right font-mono">29.9667° N<br />77.5500° E</div>
-              </div>
+            {/* Live Google Map — factory location */}
+            <div className="border border-slate-100 rounded-2xl overflow-hidden relative h-[240px] bg-slate-100">
+              <iframe
+                title="Angels Instruments location on Google Maps"
+                src="https://maps.google.com/maps?q=XGWM%2B2XX%20Chilkana%20Road%2C%20Khatakheri%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001&z=15&output=embed"
+                className="absolute inset-0 h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <a
+                href="https://maps.google.com/maps?q=XGWM%2B2XX%20Chilkana%20Road%2C%20Khatakheri%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-3 right-3 z-10 bg-slate-900/90 hover:bg-slate-900 text-white text-3xs font-bold uppercase tracking-wide px-3 py-1.5 rounded-lg shadow border border-slate-800"
+              >
+                Open in Google Maps
+              </a>
             </div>
           </div>
         </div>

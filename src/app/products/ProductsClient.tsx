@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Search, X, Filter, RefreshCw, MessageSquare } from "lucide-react";
-import { PRODUCTS, CATEGORIES } from "@/data/products";
+import { CATALOG_PRODUCTS, CATEGORIES } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import { useRFQ } from "@/context/RFQContext";
 
@@ -58,7 +58,7 @@ export default function ProductsClient() {
 
   // Filtered Products
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return CATALOG_PRODUCTS.filter((product) => {
       const matchesCategory =
         selectedCategory === "all" || product.categorySlug === selectedCategory;
 
@@ -110,10 +110,10 @@ export default function ProductsClient() {
                   : "text-slate-600 hover:bg-slate-100 hover:text-blue-900"
               }`}
             >
-              All Categories ({PRODUCTS.length})
+              All Categories ({CATALOG_PRODUCTS.length})
             </button>
             {CATEGORIES.map((cat) => {
-              const count = PRODUCTS.filter((p) => p.categorySlug === cat.slug).length;
+              const count = CATALOG_PRODUCTS.filter((p) => p.categorySlug === cat.slug).length;
               return (
                 <button
                   key={cat.slug}

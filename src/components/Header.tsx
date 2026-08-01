@@ -60,6 +60,7 @@ export default function Header() {
     { name: "About Us / Profile", href: "/about" },
     { name: "Products", href: "/products", hasDropdown: true },
     { name: "Pilot Scale Plants", href: "/pilot-plants" },
+    { name: "Clientele", href: "/clientele" },
     { name: "Achievements / ISO", href: "/achievements" },
     { name: "Contact Us", href: "/contact" },
   ];
