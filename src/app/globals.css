@@ -1,19 +1,154 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  /* Core dark industrial palette */
+  --background: #060910;
+  --foreground: #e8edf5;
+
+  --surface: #0b111e;
+  --surface-2: #101a2c;
+  --card: #0d1522;
+  --card-foreground: #e8edf5;
+
+  --muted: #8595ac;
+  --muted-strong: #aab6c9;
+
+  --border: #1c2740;
+  --border-strong: #2a3956;
+
+  /* Brand */
+  --primary: #2563eb;        /* engineered blue */
+  --primary-bright: #3b82f6;
+  --primary-foreground: #f8fafc;
+
+  --accent: #f59e0b;         /* amber / gold */
+  --accent-bright: #fbbf24;
+  --accent-foreground: #0b0f17;
+
+  --glow-a: #38bdf8;         /* cyan */
+  --glow-b: #6366f1;         /* indigo */
+  --glow-c: #f59e0b;         /* amber */
+
+  --radius: 0.9rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-strong: var(--muted-strong);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-bright: var(--primary-bright);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-glow-a: var(--glow-a);
+  --color-glow-b: var(--glow-b);
+  --color-glow-c: var(--glow-c);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --radius-lg: var(--radius);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* ---------- Blueprint grid backdrop ---------- */
+.bg-blueprint {
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+}
+
+/* ---------- Aurora ---------- */
+@keyframes aurora-move {
+  0% { transform: translate3d(-10%, -10%, 0) rotate(0deg) scale(1.1); }
+  50% { transform: translate3d(10%, 5%, 0) rotate(180deg) scale(1.3); }
+  100% { transform: translate3d(-10%, -10%, 0) rotate(360deg) scale(1.1); }
+}
+.animate-aurora {
+  animation: aurora-move 18s linear infinite;
+}
+
+/* ---------- Shiny text sweep ---------- */
+@keyframes shine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.animate-shine {
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+/* ---------- Gradient text drift ---------- */
+@keyframes gradient-drift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient-text {
+  background-size: 200% 200%;
+  animation: gradient-drift 6s ease infinite;
+}
+
+/* ---------- Slow float ---------- */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* ---------- Marquee ---------- */
+@keyframes marquee-x {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee-x 30s linear infinite;
+}
+
+/* ---------- Pulse ring ---------- */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.35); }
+  70% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora,
+  .animate-shine,
+  .animate-gradient-text,
+  .animate-float-slow,
+  .animate-marquee,
+  .animate-pulse-ring {
+    animation: none !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }

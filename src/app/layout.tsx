@@ -40,9 +40,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-background`}
     >
-      <body className="min-h-full flex flex-col bg-white text-slate-900 selection:bg-blue-900 selection:text-white">
+      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-amber-500 selection:text-slate-900">
         <RFQProvider>
           <Header />
           <main className="flex-grow flex flex-col">{children}</main>
