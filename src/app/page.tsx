@@ -98,7 +98,7 @@ export default function Home() {
 
               <div className="space-y-4 pt-2">
                 <a
-                  href="tel:+9198100XXXXX"
+                  href="tel:+919760577862"
                   className="flex items-center gap-3.5 group p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 transition-all"
                 >
                   <div className="w-10 h-10 rounded-lg bg-blue-900/50 text-amber-400 flex items-center justify-center font-bold">
@@ -107,13 +107,14 @@ export default function Home() {
                   <div>
                     <p className="text-3xs text-slate-400 font-semibold uppercase">Call Technical Support</p>
                     <p className="text-sm font-bold text-white group-hover:text-amber-400 transition-colors">
-                      +91-98100-XXXXX
+                      +91 97605 77862
                     </p>
+                    <p className="text-3xs font-bold text-slate-300">+91 94121 31200</p>
                   </div>
                 </a>
 
                 <a
-                  href="mailto:sales@angelsinstruments.com"
+                  href="mailto:info@angelsinstruments.in"
                   className="flex items-center gap-3.5 group p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 transition-all"
                 >
                   <div className="w-10 h-10 rounded-lg bg-blue-900/50 text-amber-400 flex items-center justify-center font-bold">
@@ -122,8 +123,9 @@ export default function Home() {
                   <div>
                     <p className="text-3xs text-slate-400 font-semibold uppercase">Email Specifications</p>
                     <p className="text-sm font-bold text-white group-hover:text-amber-400 transition-colors">
-                      sales@angelsinstruments.com
+                      info@angelsinstruments.in
                     </p>
+                    <p className="text-3xs font-bold text-slate-300">angelsinstruments@gmail.com</p>
                   </div>
                 </a>
               </div>

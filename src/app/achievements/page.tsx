@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Award, ShieldCheck, CheckCircle2, Globe2, BookOpen, Star, Building } from "lucide-react";
 
 export const metadata = {
@@ -12,6 +13,16 @@ export default function AchievementsPage() {
     { title: "Central Pulp & Paper Research Institute", desc: "Our Paper & Pulp Lab Testing Instruments supplied, installed & calibrated at CPPRI, Saharanpur (U.P.) India are working satisfactorily.", icon: Building },
     { title: "IIT Roorkee – Department of Paper Technology", desc: "Our Pulp Lab Testing Instruments supplied at IIT Roorkee (Saharanpur Campus) are certified and working satisfactorily per their assessment.", icon: BookOpen },
     { title: "High Domestic Market Recognition", desc: "Strong recognition in the domestic market with focus on quality compliance of paper testing equipment, headed by a qualified team of professionals.", icon: Star },
+  ];
+
+  const certificates = [
+    { src: "/certificates/cppri.png", title: "Central Pulp & Paper Research Institute (CPPRI)", org: "Paper Making Lab · Saharanpur, U.P." },
+    { src: "/certificates/iit-roorkee.png", title: "Indian Institute of Technology Roorkee", org: "Department of Paper Technology" },
+    { src: "/certificates/nth-kolkata.png", title: "National Test House (ER), Kolkata", org: "Smoothness & Porosity Tester" },
+    { src: "/certificates/nth-mumbai.png", title: "National Test House (WR), Mumbai", org: "Smoothness & Porosity Tester" },
+    { src: "/certificates/nth-chennai.png", title: "National Test House (SR), Chennai", org: "Smoothness & Porosity Tester" },
+    { src: "/certificates/nth-jaipur.png", title: "National Test House (NWR), Jaipur", org: "Smoothness & Porosity Tester" },
+    { src: "/certificates/rajasthan-barytes.png", title: "Rajasthan Barytes Limited, Udaipur", org: "Abrasion Tester Performance Report" },
   ];
 
   const standardsMatrix = [
@@ -68,50 +79,31 @@ export default function AchievementsPage() {
               <p className="text-slate-500 text-xs sm:text-sm">Our instruments are installed and certified working satisfactorily at India's premier research laboratories.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* CPPRI Certificate */}
-              <div className="bg-white border-2 border-amber-200 rounded-2xl p-8 shadow-sm space-y-5 relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-amber-400" />
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
-                    <Building className="w-6 h-6 text-amber-600" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {certificates.map((cert) => (
+                <figure
+                  key={cert.src}
+                  className="group bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:border-amber-200 transition-all flex flex-col"
+                >
+                  <div className="relative w-full aspect-[3/4] bg-slate-50 overflow-hidden">
+                    <Image
+                      src={cert.src || "/placeholder.svg"}
+                      alt={`Installation and performance certificate from ${cert.title}`}
+                      fill
+                      className="object-contain group-hover:scale-[1.03] transition-transform duration-300"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
                   </div>
-                  <div>
-                    <p className="text-3xs font-bold uppercase tracking-wider text-slate-400 mb-0.5">Certificate of Satisfaction</p>
-                    <h3 className="font-black text-slate-900 text-base leading-tight">Central Pulp &amp; Paper Research Institute (CPPRI)</h3>
-                    <p className="text-3xs text-slate-400 mt-0.5">Saharanpur, U.P. India</p>
-                  </div>
-                </div>
-                <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 text-xs text-slate-700 leading-relaxed italic">
-                  &ldquo;THIS IS TO CERTIFY THAT THE INSTRUMENTS SUPPLIED / INSTALLED / CALIBRATED IN PAPER MAKING LAB BY M/S ANGELS INSTRUMENTS, LANE NO. 15, SAHIN BAGH, SAHARANPUR (U.P.) INDIA ARE WORKING SATISFACTORILY.&rdquo;
-                </div>
-                <div className="flex items-center gap-2 text-xs text-slate-600 font-semibold">
-                  <ShieldCheck className="w-4 h-4 text-amber-500" />
-                  <span>Signed by: Paper Making Division, CPPRI</span>
-                </div>
-              </div>
-
-              {/* IIT Roorkee Certificate */}
-              <div className="bg-white border-2 border-blue-200 rounded-2xl p-8 shadow-sm space-y-5 relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-blue-700" />
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
-                    <BookOpen className="w-6 h-6 text-blue-700" />
-                  </div>
-                  <div>
-                    <p className="text-3xs font-bold uppercase tracking-wider text-slate-400 mb-0.5">Certificate of Satisfaction</p>
-                    <h3 className="font-black text-slate-900 text-base leading-tight">Indian Institute of Technology Roorkee</h3>
-                    <p className="text-3xs text-slate-400 mt-0.5">Department of Paper Technology, Saharanpur Campus</p>
-                  </div>
-                </div>
-                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-xs text-slate-700 leading-relaxed italic">
-                  &ldquo;THIS IS TO CERTIFY THAT THE PULP LAB TESTING INSTRUMENTS SUPPLIED / INSTALLED BY M/S ANGELS INSTRUMENTS, LANE NO. 15, SAHIN BAGH, SAHARANPUR (U.P.) INDIA ARE WORKING SATISFACTORILY.&rdquo;
-                </div>
-                <div className="flex items-center gap-2 text-xs text-slate-600 font-semibold">
-                  <ShieldCheck className="w-4 h-4 text-blue-700" />
-                  <span>Signed by: Assistant Professor, Dept. of Paper Technology</span>
-                </div>
-              </div>
+                  <figcaption className="p-4 border-t border-slate-100 space-y-1">
+                    <div className="flex items-center gap-1.5 text-amber-600">
+                      <ShieldCheck className="w-4 h-4 shrink-0" />
+                      <span className="text-4xs font-black uppercase tracking-wider text-slate-400">Verified Certificate</span>
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-sm leading-snug text-pretty">{cert.title}</h3>
+                    <p className="text-2xs text-slate-500 font-semibold">{cert.org}</p>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           </div>
 
