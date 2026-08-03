@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
@@ -113,6 +114,20 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </p>
               </div>
             </div>
+
+            {/* Product Image (when available) */}
+            {product.image && (
+              <div className="relative w-full aspect-[4/3] sm:aspect-video bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                <Image
+                  src={product.image || "/placeholder.svg"}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-3"
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                  priority
+                />
+              </div>
+            )}
 
             {/* Description */}
             <div className="space-y-4">
@@ -243,18 +258,18 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <h4 className="font-bold text-slate-900 text-sm">Need Help with Specs?</h4>
               <div className="space-y-3 text-xs text-slate-600">
                 <a
-                  href="tel:+9198100XXXXX"
+                  href="tel:+919760577862"
                   className="flex items-center gap-2.5 hover:text-blue-900 transition-colors"
                 >
                   <Phone className="w-4 h-4 text-amber-500 shrink-0" />
-                  <span>+91-98100-XXXXX</span>
+                  <span>+91 97605 77862 / +91 94121 31200</span>
                 </a>
                 <a
-                  href="mailto:sales@angelsinstruments.com"
+                  href="mailto:info@angelsinstruments.in"
                   className="flex items-center gap-2.5 hover:text-blue-900 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-amber-500 shrink-0" />
-                  <span>sales@angelsinstruments.com</span>
+                  <span>info@angelsinstruments.in</span>
                 </a>
               </div>
             </div>

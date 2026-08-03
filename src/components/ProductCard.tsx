@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MessageSquare, ArrowRight, Award } from "lucide-react";
 import { Product } from "@/data/products";
 import { useRFQ } from "@/context/RFQContext";
@@ -17,6 +18,19 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="group bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-slate-200/80 transition-all duration-300 flex flex-col justify-between overflow-hidden">
       {/* Visual Header / Gradient Accent */}
       <div className="h-3 bg-gradient-to-r from-blue-900 via-blue-800 to-slate-700" />
+
+      {/* Product Image (when available) */}
+      {product.image && (
+        <div className="relative w-full aspect-video bg-white border-b border-slate-100 overflow-hidden">
+          <Image
+            src={product.image || "/placeholder.svg"}
+            alt={product.name}
+            fill
+            className="object-contain p-2 group-hover:scale-[1.03] transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      )}
 
       {/* Content Area */}
       <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between gap-4">

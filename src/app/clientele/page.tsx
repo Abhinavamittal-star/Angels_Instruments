@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Users, Building2, FlaskConical, Factory, GraduationCap, Landmark, CheckCircle2 } from "lucide-react";
 
 export const metadata = {
@@ -51,14 +52,6 @@ export default function ClientelePage() {
     education: { label: "Academic Institute", icon: GraduationCap },
   };
 
-  // Notable brands / marquee clients highlighted on the original logo wall
-  const marqueeBrands = [
-    "BILT", "Cadila Pharmaceuticals", "ITC Limited", "Indoco Remedies", "Larsen & Toubro",
-    "Forest Research Institute", "Star Paper Mills", "CPPRI", "B K Birla Group", "Marico",
-    "The Paper Specialist", "Three M Paper", "TNPL", "Reliance Industries", "Indian Institute of Packaging",
-    "National Test House",
-  ];
-
   const stats = [
     { value: "4", label: "National Test Houses Served" },
     { value: "15+", label: "Leading Paper & Pulp Mills" },
@@ -107,15 +100,15 @@ export default function ClientelePage() {
                 majors — our equipment powers quality control across industries.
               </p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {marqueeBrands.map((brand) => (
-                <div
-                  key={brand}
-                  className="flex items-center justify-center text-center bg-slate-50 border border-slate-100 rounded-xl px-4 py-6 hover:shadow-md hover:border-blue-100 transition-all"
-                >
-                  <span className="font-black text-slate-700 text-sm sm:text-base tracking-tight">{brand}</span>
-                </div>
-              ))}
+            <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-6 shadow-sm">
+              <Image
+                src="/clients/client-logos.png"
+                alt="Logo wall of Angels Instruments clients including BILT, Cadila Pharmaceuticals, ITC Limited, Indoco Remedies, Larsen & Toubro, Forest Research Institute, Star Paper Mills, CPPRI, B K Birla Group, Marico, Three M Paper, TNPL, Reliance Industries and Indian Institute of Packaging"
+                width={1200}
+                height={900}
+                className="w-full h-auto rounded-lg"
+                sizes="(max-width: 1024px) 100vw, 1024px"
+              />
             </div>
           </div>
 
