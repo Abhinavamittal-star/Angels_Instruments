@@ -63,7 +63,7 @@ export default function Home() {
                   </div>
                   <p className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                     <GradientText>
-                      <CountUp to={s.value} suffix={s.suffix} duration={2} />
+                      <CountUp to={s.value} suffix={s.suffix} duration={4.5} />
                     </GradientText>
                   </p>
                   <p className="font-mono text-[0.65rem] font-bold uppercase tracking-wider text-muted sm:text-xs">

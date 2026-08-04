@@ -97,7 +97,7 @@ export default function About() {
                   {stats.map((s) => (
                     <div key={s.label} className="space-y-1">
                       <p className="text-2xl font-bold text-primary-bright">
-                        {s.display ? s.display : <CountUp to={s.value} suffix={s.suffix} duration={2} />}
+                        {s.display ? s.display : <CountUp to={s.value} suffix={s.suffix} duration={4.5} />}
                       </p>
                       <p className="font-mono text-[0.6rem] font-bold uppercase tracking-wider text-muted">{s.label}</p>
                     </div>

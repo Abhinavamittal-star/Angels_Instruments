@@ -18,6 +18,9 @@ export default function PageHero({ eyebrow, title, description, gradientTitle = 
   return (
     <section className="relative overflow-hidden border-b border-border bg-background px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <ParticleField color="99, 102, 241" density={60} />
+      <div className="magic-rings pointer-events-none opacity-70" />
+      <div className="magic-rings-arc pointer-events-none" />
+      <div className="laser-bars pointer-events-none" />
       <div className="pointer-events-none absolute inset-0 bg-grid-fade opacity-60" />
       <div className="animate-aurora pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-primary/20 blur-[110px]" />
       <div className="animate-aurora pointer-events-none absolute -bottom-24 left-0 h-80 w-80 rounded-full bg-accent/10 blur-[110px] [animation-delay:-7s]" />

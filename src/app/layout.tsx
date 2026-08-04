@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RFQModal from "@/components/RFQModal";
+import SiteBackground from "@/components/reactbits/SiteBackground";
 import { RFQProvider } from "@/context/RFQContext";
 
 const spaceGrotesk = Space_Grotesk({
@@ -48,7 +49,8 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased bg-background`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
+      <body className="min-h-full flex flex-col text-foreground selection:bg-accent selection:text-accent-foreground">
+        <SiteBackground />
         <RFQProvider>
           <Header />
           <main className="flex-grow flex flex-col">{children}</main>

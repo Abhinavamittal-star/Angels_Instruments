@@ -303,6 +303,77 @@ body {
   animation: scan-sweep 7s ease-in-out infinite;
 }
 
+/* ---------- Magic Rings (React-Bits sci-fi concentric arcs) ---------- */
+@keyframes rings-pulse {
+  0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.06); }
+}
+@keyframes rings-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.magic-rings {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 130vmax;
+  width: 130vmax;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle at center,
+    transparent 0 78px,
+    rgba(99, 102, 241, 0.10) 78px 79px,
+    transparent 79px 158px,
+    rgba(56, 189, 248, 0.08) 158px 159px,
+    transparent 159px 240px
+  );
+  -webkit-mask-image: radial-gradient(circle at center, #000 0%, rgba(0, 0, 0, 0.5) 42%, transparent 70%);
+  mask-image: radial-gradient(circle at center, #000 0%, rgba(0, 0, 0, 0.5) 42%, transparent 70%);
+  animation: rings-pulse 9s ease-in-out infinite;
+}
+.magic-rings-arc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 90vmax;
+  width: 90vmax;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(99, 102, 241, 0.22) 26deg,
+    transparent 60deg,
+    transparent 180deg,
+    rgba(56, 189, 248, 0.20) 210deg,
+    transparent 246deg,
+    transparent 360deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 0 40%, #000 42%, #000 49%, transparent 51%);
+  mask: radial-gradient(circle, transparent 0 40%, #000 42%, #000 49%, transparent 51%);
+  filter: blur(1px);
+  animation: rings-spin 24s linear infinite;
+}
+
+/* Vertical laser bars (React-Bits "Laser Flow" vibe) */
+@keyframes laser-flicker {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.85; }
+}
+.laser-bars {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 118px,
+    rgba(56, 189, 248, 0.07) 118px 119px,
+    transparent 119px 240px
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  animation: laser-flicker 6s ease-in-out infinite;
+}
+
 /* ---------- Glare hover sweep ---------- */
 .glare-hover {
   position: relative;
@@ -332,9 +403,12 @@ body {
   .border-glow-hover::before,
   .star-border-trail,
   .star-border-trail-2,
-  .bg-gradient-waves,
-  .bg-beams,
-  .scan-line {
+    .bg-gradient-waves,
+    .bg-beams,
+    .scan-line,
+    .magic-rings,
+    .magic-rings-arc,
+    .laser-bars {
     animation: none !important;
   }
 }
