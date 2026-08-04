@@ -76,21 +76,21 @@ export default function ProductsClient() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col lg:flex-row gap-8 items-start">
-      
-      {/* Sidebar Filters (Desktop) */}
-      <aside className="w-full lg:w-64 bg-slate-50 border border-slate-100 p-5 rounded-2xl shrink-0 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-          <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
-            <Filter className="w-4 h-4 text-blue-900" />
+    <div className="mx-auto flex w-full max-w-7xl flex-col items-start gap-8 px-4 py-10 sm:px-6 lg:flex-row lg:px-8">
+
+      {/* Sidebar Filters */}
+      <aside className="w-full shrink-0 space-y-6 rounded-2xl border border-border bg-surface p-5 lg:w-64">
+        <div className="flex items-center justify-between border-b border-border pb-3">
+          <div className="flex items-center gap-2 text-sm font-bold text-foreground">
+            <Filter className="h-4 w-4 text-primary-bright" />
             <span>Search Filters</span>
           </div>
           {(selectedCategory !== "all" || searchQuery !== "") && (
             <button
               onClick={handleClearFilters}
-              className="text-4xs font-bold text-blue-900 hover:text-amber-600 flex items-center gap-1 uppercase transition-colors"
+              className="flex items-center gap-1 font-mono text-[0.6rem] font-bold uppercase text-primary-bright transition-colors hover:text-accent-bright"
             >
-              <RefreshCw className="w-2.5 h-2.5" />
+              <RefreshCw className="h-2.5 w-2.5" />
               <span>Reset</span>
             </button>
           )}
@@ -98,16 +98,16 @@ export default function ProductsClient() {
 
         {/* Category List */}
         <div className="space-y-2">
-          <label className="block text-2xs font-extrabold uppercase tracking-wider text-slate-400 mb-1">
+          <label className="mb-1 block font-mono text-[0.6rem] font-bold uppercase tracking-wider text-muted">
             Category
           </label>
           <div className="flex flex-col gap-1">
             <button
               onClick={() => handleCategoryChange("all")}
-              className={`text-left px-3 py-2 rounded-lg text-xs font-semibold transition-all ${
+              className={`rounded-lg px-3 py-2 text-left text-xs font-semibold transition-all ${
                 selectedCategory === "all"
-                  ? "bg-blue-900 text-white font-bold"
-                  : "text-slate-600 hover:bg-slate-100 hover:text-blue-900"
+                  ? "bg-primary font-bold text-primary-foreground glow-primary"
+                  : "text-muted-strong hover:bg-surface-2 hover:text-foreground"
               }`}
             >
               All Categories ({CATALOG_PRODUCTS.length})
@@ -118,16 +118,16 @@ export default function ProductsClient() {
                 <button
                   key={cat.slug}
                   onClick={() => handleCategoryChange(cat.slug)}
-                  className={`text-left px-3 py-2 rounded-lg text-xs font-semibold flex justify-between items-center transition-all ${
+                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-left text-xs font-semibold transition-all ${
                     selectedCategory === cat.slug
-                      ? "bg-blue-900 text-white font-bold"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-blue-900"
+                      ? "bg-primary font-bold text-primary-foreground glow-primary"
+                      : "text-muted-strong hover:bg-surface-2 hover:text-foreground"
                   }`}
                 >
                   <span>{cat.name}</span>
                   <span
-                    className={`text-3xs px-2 py-0.5 rounded-full ${
-                      selectedCategory === cat.slug ? "bg-blue-800 text-blue-100" : "bg-slate-200 text-slate-500"
+                    className={`rounded-full px-2 py-0.5 text-[0.6rem] ${
+                      selectedCategory === cat.slug ? "bg-primary-bright/40 text-primary-foreground" : "bg-surface-2 text-muted"
                     }`}
                   >
                     {count}
@@ -139,14 +139,14 @@ export default function ProductsClient() {
         </div>
 
         {/* Quick Contact Box */}
-        <div className="p-4 bg-slate-900 text-white rounded-xl text-xs space-y-3">
-          <p className="font-bold text-amber-400">Custom Testing Needs?</p>
-          <p className="text-slate-300 text-3xs leading-relaxed">
+        <div className="space-y-3 rounded-xl border border-border bg-card p-4 text-xs">
+          <p className="font-bold text-accent-bright">Custom Testing Needs?</p>
+          <p className="text-[0.7rem] leading-relaxed text-muted">
             We configure capacities, specimen sizes, and standards to suit your unique R&D specifications.
           </p>
           <button
             onClick={() => openRFQ()}
-            className="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-extrabold text-3xs py-2 rounded-lg uppercase tracking-wider transition-colors"
+            className="w-full rounded-lg bg-accent py-2 text-[0.7rem] font-bold uppercase tracking-wider text-accent-foreground transition-colors hover:bg-accent-bright"
           >
             Inquire Details
           </button>
@@ -155,7 +155,7 @@ export default function ProductsClient() {
 
       {/* Product List Content */}
       <section className="flex-1 space-y-6">
-        
+
         {/* Search Bar / Input Form */}
         <form onSubmit={handleSearchSubmit} className="flex gap-2">
           <div className="relative flex-1">
@@ -164,7 +164,7 @@ export default function ProductsClient() {
               placeholder="Search instruments (e.g. Bursting Strength Tester)..."
               value={searchQuery}
               onChange={handleSearchChange}
-              className="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm pl-4 pr-10 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-900 focus:bg-white transition-all"
+              className="w-full rounded-xl border border-border bg-surface py-2.5 pl-4 pr-10 text-sm text-foreground placeholder:text-muted transition-all focus:border-primary-bright focus:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-primary/40"
             />
             {searchQuery && (
               <button
@@ -173,32 +173,32 @@ export default function ProductsClient() {
                   setSearchQuery("");
                   updateParams(selectedCategory, "");
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-foreground"
                 aria-label="Clear search"
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </button>
             )}
           </div>
           <button
             type="submit"
-            className="bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl flex items-center gap-2 shrink-0 transition-colors shadow-sm"
+            className="flex shrink-0 items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-primary-foreground transition-colors hover:bg-primary-bright sm:text-sm"
           >
-            <Search className="w-4 h-4" />
+            <Search className="h-4 w-4" />
             <span className="hidden sm:inline">Search</span>
           </button>
         </form>
 
         {/* Results summary info */}
-        <div className="flex justify-between items-center text-xs text-slate-500 pb-2 border-b border-slate-100">
+        <div className="flex items-center justify-between border-b border-border pb-2 text-xs text-muted">
           <div>
-            Showing <span className="font-bold text-slate-900">{filteredProducts.length}</span>{" "}
+            Showing <span className="font-bold text-foreground">{filteredProducts.length}</span>{" "}
             instrument{filteredProducts.length === 1 ? "" : "s"}
             {selectedCategory !== "all" && (
               <>
                 {" "}
                 in{" "}
-                <span className="font-bold text-slate-900">
+                <span className="font-bold text-foreground">
                   {CATEGORIES.find((c) => c.slug === selectedCategory)?.name}
                 </span>
               </>
@@ -206,37 +206,37 @@ export default function ProductsClient() {
           </div>
           {searchQuery && (
             <div>
-              for query &ldquo;<span className="italic text-slate-900">{searchQuery}</span>&rdquo;
+              for query &ldquo;<span className="italic text-foreground">{searchQuery}</span>&rdquo;
             </div>
           )}
         </div>
 
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center text-center py-16 px-4 bg-slate-50 border border-dashed border-slate-200 rounded-2xl">
-            <Search className="w-10 h-10 text-slate-400 mb-3" />
-            <h3 className="text-lg font-bold text-slate-900 mb-1">No Instruments Found</h3>
-            <p className="text-slate-500 text-xs sm:text-sm max-w-md leading-relaxed mb-6">
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border-strong bg-surface px-4 py-16 text-center">
+            <Search className="mb-3 h-10 w-10 text-muted" />
+            <h3 className="mb-1 text-lg font-bold text-foreground">No Instruments Found</h3>
+            <p className="mb-6 max-w-md text-xs leading-relaxed text-muted sm:text-sm">
               We couldn&apos;t find any laboratory testing machines matching your filters. Try checking your spelling or selecting another category.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <button
                 onClick={handleClearFilters}
-                className="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-4 py-2.5 rounded-lg transition-colors"
+                className="rounded-lg border border-border-strong px-4 py-2.5 text-xs font-bold text-foreground transition-colors hover:bg-surface-2"
               >
                 Clear All Filters
               </button>
               <button
                 onClick={() => openRFQ(searchQuery)}
-                className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold text-xs px-4 py-2.5 rounded-lg flex items-center gap-1.5 transition-colors uppercase tracking-wider"
+                className="flex items-center gap-1.5 rounded-lg bg-accent px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-accent-foreground transition-colors hover:bg-accent-bright"
               >
-                <MessageSquare className="w-3.5 h-3.5" />
+                <MessageSquare className="h-3.5 w-3.5" />
                 <span>Request Custom Machine</span>
               </button>
             </div>

@@ -9,40 +9,31 @@ import {
   Phone,
   Mail,
   ShieldCheck,
-  FileText,
-  MessageSquare,
   Globe2,
 } from "lucide-react";
 import { PRODUCTS } from "@/data/products";
 import { Metadata } from "next";
+import RFQPageButton from "./RFQPageButton";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// Generate Static Params for build pre-rendering
 export async function generateStaticParams() {
-  return PRODUCTS.map((product) => ({
-    id: product.id,
-  }));
+  return PRODUCTS.map((product) => ({ id: product.id }));
 }
 
-// Dynamic SEO metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const product = PRODUCTS.find((p) => p.id === resolvedParams.id);
 
   if (!product) {
-    return {
-      title: "Product Not Found | ANGELS INSTRUMENTS",
-    };
+    return { title: "Product Not Found | ANGELS INSTRUMENTS" };
   }
 
   return {
     title: `${product.name} | ANGELS INSTRUMENTS`,
-    description: `${product.tagline}. Calibrated to conform to standards: ${product.standards.join(
-      ", "
-    )}.`,
+    description: `${product.tagline}. Calibrated to conform to standards: ${product.standards.join(", ")}.`,
   };
 }
 
@@ -50,74 +41,52 @@ export default async function ProductDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
   const product = PRODUCTS.find((p) => p.id === resolvedParams.id);
 
-  if (!product) {
-    notFound();
-  }
-
-  // To trigger RFQ dynamically on the client side, we need a wrapper client component or a global state handler.
-  // Since we already have a global context that triggers on clicking a button, we can create a client component button.
-  // Let's import a client component button inline or write a reusable Client-side CTA component.
-  // Wait, let's create a small client-side component or just write a small client button that we import.
-  // Let's create a Client Button: we can build it inline since we can use "use client" on subcomponents, or we can make a dedicated Client Button file or put it in a separate helper. Let's make a small helper button: `RFQTriggerButton.tsx`.
+  if (!product) notFound();
 
   return (
-    <div className="w-full bg-white flex flex-col">
-      {/* Top Breadcrumb Bar */}
-      <div className="bg-slate-50 border-b border-slate-100 py-3.5 px-4 sm:px-6 lg:px-8 text-2xs sm:text-xs">
-        <div className="max-w-7xl mx-auto flex items-center gap-2 text-slate-500 font-semibold">
-          <Link href="/" className="hover:text-blue-900 transition-colors">
-            Home
-          </Link>
+    <div className="flex w-full flex-col">
+      {/* Breadcrumb */}
+      <div className="border-b border-border bg-surface px-4 py-3.5 text-[0.7rem] sm:px-6 sm:text-xs lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center gap-2 font-semibold text-muted">
+          <Link href="/" className="transition-colors hover:text-primary-bright">Home</Link>
           <span>/</span>
-          <Link href="/products" className="hover:text-blue-900 transition-colors">
-            Products
-          </Link>
+          <Link href="/products" className="transition-colors hover:text-primary-bright">Products</Link>
           <span>/</span>
-          <Link
-            href={`/products?category=${product.categorySlug}`}
-            className="hover:text-blue-900 transition-colors"
-          >
+          <Link href={`/products?category=${product.categorySlug}`} className="transition-colors hover:text-primary-bright">
             {product.category}
           </Link>
           <span>/</span>
-          <span className="text-slate-800 font-bold truncate max-w-[200px] sm:max-w-none">
-            {product.name}
-          </span>
+          <span className="max-w-[200px] truncate font-bold text-foreground sm:max-w-none">{product.name}</span>
         </div>
       </div>
 
-      {/* Main Content Details */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          
-          {/* Left Column (Main Specs) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Title & Tagline */}
+      <section className="px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
+
+          {/* Left column */}
+          <div className="space-y-10 lg:col-span-8">
             <div className="space-y-3">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-900 hover:text-amber-500 transition-colors mb-2"
+                className="mb-2 inline-flex items-center gap-1.5 text-xs font-bold text-primary-bright transition-colors hover:text-accent-bright"
               >
-                <ArrowLeft className="w-3.5 h-3.5" />
+                <ArrowLeft className="h-3.5 w-3.5" />
                 Back to Catalog
               </Link>
 
               <div className="space-y-1.5">
-                <span className="inline-block text-4xs font-black uppercase tracking-widest text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.5 rounded">
+                <span className="inline-block rounded border border-border bg-surface-2 px-2 py-0.5 font-mono text-[0.6rem] font-bold uppercase tracking-widest text-muted">
                   {product.category}
                 </span>
-                <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                <h1 className="text-2xl font-bold leading-tight tracking-tight text-foreground text-balance sm:text-4xl">
                   {product.name}
                 </h1>
-                <p className="text-blue-900 text-sm sm:text-lg font-bold leading-relaxed">
-                  {product.tagline}
-                </p>
+                <p className="text-sm font-bold leading-relaxed text-primary-bright sm:text-lg">{product.tagline}</p>
               </div>
             </div>
 
-            {/* Product Image (when available) */}
             {product.image && (
-              <div className="relative w-full aspect-[4/3] sm:aspect-video bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border bg-surface-2 sm:aspect-video">
                 <Image
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}
@@ -129,53 +98,39 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {/* Description */}
             <div className="space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                Overview & Description
-              </h2>
-              <p className="text-slate-600 text-sm leading-relaxed whitespace-pre-line">
-                {product.description}
-              </p>
+              <h2 className="border-b border-border pb-2 text-lg font-bold text-foreground">Overview &amp; Description</h2>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-muted-strong">{product.description}</p>
             </div>
 
-            {/* Key Features */}
             <div className="space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                Key Product Features
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <h2 className="border-b border-border pb-2 text-lg font-bold text-foreground">Key Product Features</h2>
+              <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
                 {product.features.map((feat, idx) => (
-                  <div key={idx} className="flex gap-2.5 text-xs sm:text-sm text-slate-600">
-                    <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                  <div key={idx} className="flex gap-2.5 text-xs text-muted-strong sm:text-sm">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     <span>{feat}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Technical Specifications */}
             {product.specifications && Object.keys(product.specifications).length > 0 && (
               <div className="space-y-4">
-                <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                  Technical Specifications
-                </h2>
-                <div className="border border-slate-100 rounded-xl overflow-hidden shadow-2xs">
-                  <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                <h2 className="border-b border-border pb-2 text-lg font-bold text-foreground">Technical Specifications</h2>
+                <div className="overflow-hidden rounded-xl border border-border">
+                  <table className="w-full border-collapse text-left text-xs sm:text-sm">
                     <thead>
-                      <tr className="bg-slate-50 text-slate-500 uppercase text-4xs tracking-wider border-b border-slate-100">
-                        <th className="px-4 py-3 font-extrabold w-1/2">Parameter</th>
-                        <th className="px-4 py-3 font-extrabold w-1/2">Standard Spec Range</th>
+                      <tr className="border-b border-border bg-surface-2 font-mono text-[0.6rem] uppercase tracking-wider text-muted">
+                        <th className="w-1/2 px-4 py-3 font-bold">Parameter</th>
+                        <th className="w-1/2 px-4 py-3 font-bold">Standard Spec Range</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-border">
                       {Object.entries(product.specifications).map(([key, val], idx) => (
-                        <tr
-                          key={idx}
-                          className={idx % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
-                        >
-                          <td className="px-4 py-3 font-bold text-slate-800">{key}</td>
-                          <td className="px-4 py-3 text-slate-600 font-semibold">{val}</td>
+                        <tr key={idx} className={idx % 2 === 0 ? "bg-card" : "bg-surface/40"}>
+                          <td className="px-4 py-3 font-bold text-foreground">{key}</td>
+                          <td className="px-4 py-3 font-semibold text-muted-strong">{val}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -184,22 +139,19 @@ export default async function ProductDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {/* Standards Compliance */}
             {product.standards && product.standards.length > 0 && (
               <div className="space-y-4">
-                <h2 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">
-                  Compliance Testing Standards
-                </h2>
-                <p className="text-slate-500 text-xs leading-relaxed">
+                <h2 className="border-b border-border pb-2 text-lg font-bold text-foreground">Compliance Testing Standards</h2>
+                <p className="text-xs leading-relaxed text-muted">
                   This instrument meets and exceeds quality guidelines stipulated by international standardization bodies. Verify conformity for the following indices:
                 </p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {product.standards.map((std) => (
                     <span
                       key={std}
-                      className="text-xs font-bold bg-blue-50 text-blue-900 border border-blue-100 px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-2xs"
+                      className="flex items-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary-bright"
                     >
-                      <Award className="w-3.5 h-3.5 text-amber-500" />
+                      <Award className="h-3.5 w-3.5 text-accent" />
                       {std}
                     </span>
                   ))}
@@ -208,67 +160,51 @@ export default async function ProductDetailPage({ params }: PageProps) {
             )}
           </div>
 
-          {/* Right Column (Sidebar RFQ Form) */}
-          <div className="lg:col-span-4 space-y-6">
-            
-            {/* RFQ Box */}
-            <div className="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 sm:p-8 space-y-6 shadow-md relative overflow-hidden">
-              <div className="absolute -top-12 -right-12 w-28 h-28 rounded-full bg-blue-950/50" />
-              
+          {/* Right sidebar */}
+          <div className="space-y-6 lg:col-span-4">
+            <div className="glass-panel border-glow-ring relative overflow-hidden rounded-2xl p-6 sm:p-8">
               <div className="relative z-10 space-y-2">
-                <span className="text-amber-400 text-2xs font-extrabold uppercase tracking-widest">
+                <span className="font-mono text-xs font-bold uppercase tracking-widest text-accent-bright">
                   Direct Inquiries
                 </span>
-                <h3 className="text-xl font-bold text-white">Request Quotation</h3>
-                <p className="text-slate-300 text-xs leading-relaxed">
+                <h3 className="text-xl font-bold text-foreground">Request Quotation</h3>
+                <p className="text-xs leading-relaxed text-muted">
                   Contact our technical sales engineers to receive a customized quote, schematic blueprints, and operational datasheets.
                 </p>
               </div>
 
-              {/* Client Component Trigger for Quote Modal */}
-              <div className="relative z-10 space-y-3 pt-2">
+              <div className="relative z-10 space-y-3 pt-4">
                 <RFQPageButton productName={product.name} />
-                
-                <div className="text-3xs text-center text-slate-400">
-                  Response within 24 business hours.
-                </div>
+                <div className="text-center font-mono text-[0.65rem] text-muted">Response within 24 business hours.</div>
               </div>
 
-              {/* Specs download or ISO notice */}
-              <div className="relative z-10 pt-4 border-t border-slate-800 space-y-3.5">
+              <div className="relative z-10 space-y-3.5 border-t border-border pt-4">
                 <div className="flex gap-3 text-xs">
-                  <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0" />
+                  <ShieldCheck className="h-5 w-5 shrink-0 text-accent" />
                   <div>
-                    <p className="font-semibold text-white">ISO 9001:2008 Quality</p>
-                    <p className="text-slate-400 text-3xs">Guarantees material grade & compliance validation.</p>
+                    <p className="font-semibold text-foreground">ISO 9001:2008 Quality</p>
+                    <p className="text-[0.65rem] text-muted">Guarantees material grade &amp; compliance validation.</p>
                   </div>
                 </div>
                 <div className="flex gap-3 text-xs">
-                  <Globe2 className="w-5 h-5 text-amber-500 shrink-0" />
+                  <Globe2 className="h-5 w-5 shrink-0 text-accent" />
                   <div>
-                    <p className="font-semibold text-white">Global Exports Support</p>
-                    <p className="text-slate-400 text-3xs">Packaged in customized sea-worthy wooden cases.</p>
+                    <p className="font-semibold text-foreground">Global Exports Support</p>
+                    <p className="text-[0.65rem] text-muted">Packaged in customized sea-worthy wooden cases.</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Quick Contacts */}
-            <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 space-y-4">
-              <h4 className="font-bold text-slate-900 text-sm">Need Help with Specs?</h4>
-              <div className="space-y-3 text-xs text-slate-600">
-                <a
-                  href="tel:+919760577862"
-                  className="flex items-center gap-2.5 hover:text-blue-900 transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-amber-500 shrink-0" />
+            <div className="space-y-4 rounded-2xl border border-border bg-surface p-6">
+              <h4 className="text-sm font-bold text-foreground">Need Help with Specs?</h4>
+              <div className="space-y-3 text-xs text-muted-strong">
+                <a href="tel:+919760577862" className="flex items-center gap-2.5 transition-colors hover:text-primary-bright">
+                  <Phone className="h-4 w-4 shrink-0 text-accent" />
                   <span>+91 97605 77862 / +91 94121 31200</span>
                 </a>
-                <a
-                  href="mailto:info@angelsinstruments.in"
-                  className="flex items-center gap-2.5 hover:text-blue-900 transition-colors"
-                >
-                  <Mail className="w-4 h-4 text-amber-500 shrink-0" />
+                <a href="mailto:info@angelsinstruments.in" className="flex items-center gap-2.5 transition-colors hover:text-primary-bright">
+                  <Mail className="h-4 w-4 shrink-0 text-accent" />
                   <span>info@angelsinstruments.in</span>
                 </a>
               </div>
@@ -279,6 +215,3 @@ export default async function ProductDetailPage({ params }: PageProps) {
     </div>
   );
 }
-
-// Inline client component to trigger RFQ
-import RFQPageButton from "./RFQPageButton";

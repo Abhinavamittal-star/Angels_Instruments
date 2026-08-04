@@ -2,8 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRFQ } from "@/context/RFQContext";
+import ParticleField from "@/components/reactbits/ParticleField";
+import Magnet from "@/components/reactbits/Magnet";
+import { GradientText, ShinyText } from "@/components/reactbits/TextEffects";
 
 export default function HeroCarousel() {
   const { openRFQ } = useRFQ();
@@ -12,31 +16,30 @@ export default function HeroCarousel() {
   const slides = [
     {
       title: "ISO 9001:2008 Certified Quality Instruments",
-      subtitle: "Manufacturing & exporting high-precision lab testing equipment for global pulp, paper, and packaging industries.",
+      subtitle:
+        "Manufacturing & exporting high-precision lab testing equipment for global pulp, paper, and packaging industries.",
       badge: "ISO 9001:2008 CERTIFIED",
       primaryCTA: "Explore Catalog",
       primaryHref: "/products",
-      bgGradient: "from-blue-900/95 via-slate-900/90 to-slate-950/80",
     },
     {
       title: "Precision Paper & Pulp Testing Equipment",
-      subtitle: "Ensure compliance with TAPPI, ISO, SCAN, and ASTM standards using our advanced tensile, freeness, and bursting testers.",
+      subtitle:
+        "Ensure compliance with TAPPI, ISO, SCAN, and ASTM standards using our advanced tensile, freeness, and bursting testers.",
       badge: "STANDARDS CONFORMANCE",
       primaryCTA: "Paper Testing Range",
       primaryHref: "/products?category=paper-testing",
-      bgGradient: "from-blue-950/95 via-slate-900/90 to-blue-900/80",
     },
     {
       title: "Industrial Packaging & Carton Strength Testers",
-      subtitle: "Evaluate stacking capacity and drop resistance with Box Compression, Ring Crush, and Puncture testers.",
+      subtitle:
+        "Evaluate stacking capacity and drop resistance with Box Compression, Ring Crush, and Puncture testers.",
       badge: "B2B LOGISTICS ASSURANCE",
       primaryCTA: "Packaging Testing Range",
       primaryHref: "/products?category=packaging-testing",
-      bgGradient: "from-slate-900/95 via-blue-950/90 to-slate-900/80",
     },
   ];
 
-  // Auto-play slides
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -44,93 +47,89 @@ export default function HeroCarousel() {
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+  const prevSlide = () => setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
+  const nextSlide = () => setCurrentSlide((p) => (p + 1) % slides.length);
+  const slide = slides[currentSlide];
 
   return (
-    <div className="relative w-full h-[500px] sm:h-[600px] bg-slate-950 overflow-hidden flex items-center">
-      {/* Decorative Blueprint Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-35" />
+    <div className="relative flex h-[560px] w-full items-center overflow-hidden bg-background sm:h-[640px]">
+      {/* Animated particle field + aurora glows */}
+      <ParticleField color="56, 189, 248" density={80} />
+      <div className="pointer-events-none absolute inset-0 bg-grid-fade opacity-70" />
+      <div className="animate-aurora pointer-events-none absolute -left-32 top-0 h-[36rem] w-[36rem] rounded-full bg-primary/20 blur-[120px]" />
+      <div className="animate-aurora pointer-events-none absolute -right-24 bottom-0 h-[30rem] w-[30rem] rounded-full bg-glow-b/20 blur-[120px] [animation-delay:-9s]" />
 
-      {/* Dynamic slides */}
-      {slides.map((slide, idx) => (
-        <div
-          key={idx}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex items-center ${
-            idx === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-          }`}
-        >
-          {/* Overlay Gradient */}
-          <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgGradient}`} />
-
-          {/* Slide Content */}
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-left">
-            <div className="max-w-3xl space-y-6">
-              {/* Badge */}
-              <div className="inline-block bg-amber-500/10 border border-amber-500/30 text-amber-400 text-2xs sm:text-xs font-bold tracking-widest px-3 py-1 rounded-full uppercase">
+      {/* Slide content */}
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl space-y-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 font-mono text-[0.65rem] font-bold uppercase tracking-widest text-accent-bright sm:text-xs">
+                <span className="animate-pulse-ring inline-block h-1.5 w-1.5 rounded-full bg-accent" />
                 {slide.badge}
               </div>
 
-              {/* Title */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
-                {slide.title}
+              <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground text-balance sm:text-5xl lg:text-6xl">
+                <GradientText>{slide.title}</GradientText>
               </h1>
 
-              {/* Subtitle */}
-              <p className="text-slate-300 text-sm sm:text-lg leading-relaxed max-w-2xl">
+              <p className="max-w-2xl text-sm leading-relaxed text-muted-strong sm:text-lg">
                 {slide.subtitle}
               </p>
+            </motion.div>
+          </AnimatePresence>
 
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
-                <Link
-                  href={slide.primaryHref}
-                  className="bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-extrabold text-sm px-6 py-3.5 rounded-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group uppercase tracking-wider"
-                >
-                  {slide.primaryCTA}
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <button
-                  onClick={() => openRFQ()}
-                  className="bg-transparent hover:bg-white/10 text-white border border-white/30 hover:border-white font-extrabold text-sm px-6 py-3.5 rounded-lg transition-all uppercase tracking-wider text-center"
-                >
-                  Request a Quote
-                </button>
-              </div>
-            </div>
+          <div className="flex flex-col items-stretch gap-4 pt-2 sm:flex-row sm:items-center">
+            <Magnet>
+              <Link
+                href={slide.primaryHref}
+                className="group flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-all hover:bg-accent-bright glow-accent"
+              >
+                {slide.primaryCTA}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Magnet>
+            <button
+              onClick={() => openRFQ()}
+              className="rounded-lg border border-border-strong bg-surface/50 px-6 py-3.5 text-center text-sm font-bold uppercase tracking-wider text-foreground backdrop-blur-sm transition-all hover:border-primary-bright hover:bg-surface"
+            >
+              <ShinyText text="Request a Quote" />
+            </button>
           </div>
         </div>
-      ))}
+      </div>
 
-      {/* Navigation Arrows */}
+      {/* Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-slate-900/40 hover:bg-slate-900/80 border border-white/10 hover:border-white/30 text-white p-2 rounded-full transition-colors hidden sm:block"
+        className="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-border bg-surface/50 p-2 text-foreground backdrop-blur-sm transition-colors hover:border-primary-bright hover:bg-surface sm:block"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="w-6 h-6" />
+        <ChevronLeft className="h-6 w-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-slate-900/40 hover:bg-slate-900/80 border border-white/10 hover:border-white/30 text-white p-2 rounded-full transition-colors hidden sm:block"
+        className="absolute right-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-border bg-surface/50 p-2 text-foreground backdrop-blur-sm transition-colors hover:border-primary-bright hover:bg-surface sm:block"
         aria-label="Next slide"
       >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronRight className="h-6 w-6" />
       </button>
 
-      {/* Dots Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2.5">
+      {/* Dots */}
+      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2.5">
         {slides.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentSlide(idx)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              idx === currentSlide ? "bg-amber-500 w-8" : "bg-white/40 hover:bg-white/60"
+            className={`h-2.5 rounded-full transition-all duration-300 ${
+              idx === currentSlide ? "w-8 bg-accent" : "w-2.5 bg-foreground/30 hover:bg-foreground/50"
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
