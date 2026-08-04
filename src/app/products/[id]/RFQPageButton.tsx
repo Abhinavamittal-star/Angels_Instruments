@@ -14,9 +14,9 @@ export default function RFQPageButton({ productName }: RFQPageButtonProps) {
   return (
     <button
       onClick={() => openRFQ(productName)}
-      className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-extrabold text-sm py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all uppercase tracking-wider"
+      className="flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-3.5 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-all glow-accent hover:bg-accent-bright"
     >
-      <MessageSquare className="w-4 h-4 fill-slate-950/10" />
+      <MessageSquare className="h-4 w-4" />
       <span>Request Pricing Quote</span>
     </button>
   );
