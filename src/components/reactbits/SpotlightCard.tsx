@@ -36,7 +36,7 @@ export default function SpotlightCard({
       onMouseMove={handleMove}
       onMouseEnter={() => setOpacity(1)}
       onMouseLeave={() => setOpacity(0)}
-      className={`group relative overflow-hidden rounded-2xl border border-border bg-card transition-colors duration-300 hover:border-border-strong ${className}`}
+      className={`group border-glow-hover relative overflow-hidden rounded-2xl border border-border bg-card transition-colors duration-300 hover:border-transparent ${className}`}
       {...rest}
     >
       {/* Cursor spotlight */}

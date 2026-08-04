@@ -1,6 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { Users, Building2, FlaskConical, Factory, GraduationCap, Landmark, CheckCircle2 } from "lucide-react";
+import PageHero from "@/components/PageHero";
+import PageBackground from "@/components/reactbits/PageBackground";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
+import CountUp from "@/components/reactbits/CountUp";
+import { SplitText, GradientText } from "@/components/reactbits/TextEffects";
 
 export const metadata = {
   title: "Clientele / Reputed Clients | ANGELS INSTRUMENTS",
@@ -9,7 +15,6 @@ export const metadata = {
 };
 
 export default function ClientelePage() {
-  // Full client list as shown on the original Clientele / Reputed Clients page
   const clients: { name: string; location: string; type: keyof typeof typeMeta }[] = [
     { name: "Vikas College of Engineering & Technology", location: "Vijaywada, A.P.", type: "education" },
     { name: "Maghan Paper Mills (P) Ltd.", location: "Saharanpur, Punjab", type: "mill" },
@@ -53,118 +58,113 @@ export default function ClientelePage() {
   };
 
   const stats = [
-    { value: "4", label: "National Test Houses Served" },
-    { value: "15+", label: "Leading Paper & Pulp Mills" },
-    { value: "10+", label: "Pharma & Research Labs" },
-    { value: "500+", label: "Active Installations" },
+    { value: 4, suffix: "", label: "National Test Houses Served" },
+    { value: 15, suffix: "+", label: "Leading Paper & Pulp Mills" },
+    { value: 10, suffix: "+", label: "Pharma & Research Labs" },
+    { value: 500, suffix: "+", label: "Active Installations" },
   ];
 
   return (
-    <div className="w-full flex flex-col">
-      {/* Page Header */}
-      <section className="bg-slate-900 text-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20" />
-        <div className="max-w-7xl mx-auto relative z-10 text-center space-y-4">
-          <span className="text-xs font-black uppercase tracking-widest text-amber-400">Clientele / Reputed Clients</span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">Trusted by India&apos;s Leading Institutions</h1>
-          <p className="text-slate-300 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">
-            We take pride in having a long list of satisfied customers who always look up to us for their various
-            requirements. Below are the names of a few of our major clients who reflect the goodwill we have generated
-            over the years.
-          </p>
-        </div>
-      </section>
+    <div className="flex w-full flex-col">
+      <PageHero
+        eyebrow="Clientele / Reputed Clients"
+        title="Trusted by India's Leading Institutions"
+        description="We take pride in having a long list of satisfied customers who always look up to us for their various requirements. Below are the names of a few of our major clients who reflect the goodwill we have generated over the years."
+      />
 
       {/* Stats Bar */}
-      <section className="bg-white border-b border-slate-100 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center space-y-1">
-              <p className="text-3xl sm:text-4xl font-black text-blue-900">{s.value}</p>
-              <p className="text-2xs sm:text-xs font-bold text-slate-500 uppercase tracking-wider">{s.label}</p>
-            </div>
+      <section className="relative overflow-hidden border-b border-border bg-surface px-4 py-12 sm:px-6 lg:px-8">
+        <div className="pointer-events-none absolute inset-0 bg-dot-fade opacity-50" />
+        <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-6 lg:grid-cols-4">
+          {stats.map((s, i) => (
+            <AnimatedContent key={s.label} delay={i * 0.08}>
+              <div className="space-y-1 text-center">
+                <p className="text-3xl font-bold sm:text-4xl">
+                  <GradientText>
+                    <CountUp to={s.value} suffix={s.suffix} duration={2} />
+                  </GradientText>
+                </p>
+                <p className="font-mono text-[0.6rem] font-bold uppercase tracking-wider text-muted sm:text-xs">{s.label}</p>
+              </div>
+            </AnimatedContent>
           ))}
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto space-y-16">
-
+      <section className="relative overflow-hidden px-4 py-16 sm:px-6 lg:px-8">
+        <PageBackground variant="waves" />
+        <div className="relative z-10 mx-auto max-w-7xl space-y-16">
           {/* Marquee Brands Wall */}
           <div className="space-y-6">
-            <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="text-xs font-black uppercase tracking-widest text-blue-900">Marquee Clients</span>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Names That Trust Our Instruments</h2>
-              <p className="text-slate-500 text-xs sm:text-sm">
-                From national testing houses and premier research institutes to leading paper mills and pharmaceutical
-                majors — our equipment powers quality control across industries.
+            <div className="mx-auto max-w-2xl space-y-2 text-center">
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-primary-bright">Marquee Clients</span>
+              <SplitText as="h2" text="Names That Trust Our Instruments" className="block text-2xl font-bold tracking-tight text-foreground text-balance sm:text-3xl" />
+              <p className="text-xs text-muted sm:text-sm">
+                From national testing houses and premier research institutes to leading paper mills and pharmaceutical majors — our equipment powers quality control across industries.
               </p>
             </div>
-            <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-6 shadow-sm">
-              <Image
-                src="/clients/client-logos.png"
-                alt="Logo wall of Angels Instruments clients including BILT, Cadila Pharmaceuticals, ITC Limited, Indoco Remedies, Larsen & Toubro, Forest Research Institute, Star Paper Mills, CPPRI, B K Birla Group, Marico, Three M Paper, TNPL, Reliance Industries and Indian Institute of Packaging"
-                width={1200}
-                height={900}
-                className="w-full h-auto rounded-lg"
-                sizes="(max-width: 1024px) 100vw, 1024px"
-              />
-            </div>
+            <SpotlightCard className="p-4 sm:p-6">
+              <div className="overflow-hidden rounded-lg bg-foreground/95 p-4">
+                <Image
+                  src="/clients/client-logos.png"
+                  alt="Logo wall of Angels Instruments clients including BILT, Cadila Pharmaceuticals, ITC Limited, Indoco Remedies, Larsen & Toubro, Forest Research Institute, Star Paper Mills, CPPRI, B K Birla Group, Marico, Three M Paper, TNPL, Reliance Industries and Indian Institute of Packaging"
+                  width={1200}
+                  height={900}
+                  className="h-auto w-full rounded"
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                />
+              </div>
+            </SpotlightCard>
           </div>
 
           {/* Full Client List */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-900 flex items-center justify-center shrink-0">
-                <Users className="w-5 h-5" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-primary-bright">
+                <Users className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Our Valued Clients</h2>
-                <p className="text-slate-500 text-xs sm:text-sm">A representative list of organizations we proudly serve.</p>
+                <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">Our Valued Clients</h2>
+                <p className="text-xs text-muted sm:text-sm">A representative list of organizations we proudly serve.</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {clients.map((client, idx) => {
                 const meta = typeMeta[client.type];
                 const Icon = meta.icon;
                 return (
-                  <div
-                    key={idx}
-                    className="flex gap-3 bg-white border border-slate-100 rounded-2xl p-5 hover:shadow-md hover:border-blue-100 transition-all"
-                  >
-                    <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-900 flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4" />
+                  <SpotlightCard key={idx} className="flex gap-3 p-5">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface-2 text-primary-bright">
+                      <Icon className="h-4 w-4" />
                     </div>
-                    <div className="space-y-1 min-w-0">
-                      <h3 className="font-bold text-slate-800 text-sm leading-snug text-pretty">{client.name}</h3>
-                      <p className="text-2xs text-slate-500 font-semibold">{client.location}</p>
-                      <span className="inline-block text-4xs font-black uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-100 px-2 py-0.5 rounded">
+                    <div className="min-w-0 space-y-1">
+                      <h3 className="text-sm font-bold leading-snug text-foreground text-pretty">{client.name}</h3>
+                      <p className="text-[0.7rem] font-semibold text-muted">{client.location}</p>
+                      <span className="inline-block rounded border border-accent/20 bg-accent/10 px-2 py-0.5 font-mono text-[0.55rem] font-bold uppercase tracking-wider text-accent-bright">
                         {meta.label}
                       </span>
                     </div>
-                  </div>
+                  </SpotlightCard>
                 );
               })}
             </div>
 
-            <p className="text-center text-xs text-slate-400 font-semibold italic pt-2">
+            <p className="pt-2 text-center text-xs font-semibold italic text-muted">
               …and so many other satisfied clients across India and international markets.
             </p>
           </div>
 
           {/* Trust Callout */}
-          <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 relative overflow-hidden shadow-lg">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-15" />
-            <div className="relative z-10 space-y-5 max-w-3xl">
-              <span className="inline-block text-amber-400 text-2xs font-bold uppercase tracking-wider">Why Clients Choose Us</span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Long-Term Relationships Built on Quality</h2>
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                Most of our customers are satisfied with our products and services, and as a result we receive
-                repeat orders. Our instruments are installed, calibrated, and certified working satisfactorily at
-                India&apos;s most demanding research and industrial laboratories.
+          <div className="glass-panel border-glow-ring relative overflow-hidden rounded-3xl p-8 sm:p-12">
+            <div className="pointer-events-none absolute inset-0 bg-grid-fade opacity-40" />
+            <div className="relative z-10 max-w-3xl space-y-5">
+              <span className="inline-block font-mono text-xs font-bold uppercase tracking-wider text-accent-bright">Why Clients Choose Us</span>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground text-balance sm:text-3xl">Long-Term Relationships Built on Quality</h2>
+              <p className="text-xs leading-relaxed text-muted-strong sm:text-sm">
+                Most of our customers are satisfied with our products and services, and as a result we receive repeat orders. Our instruments are installed, calibrated, and certified working satisfactorily at India&apos;s most demanding research and industrial laboratories.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-slate-300 text-xs font-semibold">
+              <div className="grid grid-cols-1 gap-3 pt-2 text-xs font-semibold text-muted-strong sm:grid-cols-2">
                 {[
                   "Repeat orders from national testing houses",
                   "Certified installations at CPPRI & IIT Roorkee",
@@ -172,14 +172,13 @@ export default function ClientelePage() {
                   "Trusted by leading pharma manufacturers",
                 ].map((pt) => (
                   <div key={pt} className="flex gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-accent" />
                     <span>{pt}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
         </div>
       </section>
     </div>

@@ -18,7 +18,7 @@ import {
 import AngelsLogo from "@/components/AngelsLogo";
 import { CATEGORIES } from "@/data/products";
 import { useRFQ } from "@/context/RFQContext";
-import Magnet from "@/components/reactbits/Magnet";
+import StarBorder from "@/components/reactbits/StarBorder";
 
 export default function Header() {
   const pathname = usePathname();
@@ -216,14 +216,14 @@ export default function Header() {
 
             {/* Right CTA */}
             <div className="flex items-center gap-3">
-              <Magnet className="hidden sm:inline-block">
-                <button
-                  onClick={() => openRFQ()}
-                  className="inline-flex items-center justify-center rounded-lg bg-accent px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-accent-foreground shadow-sm transition-all hover:bg-accent-bright glow-accent"
-                >
+              <StarBorder
+                onClick={() => openRFQ()}
+                className="hidden sm:inline-flex"
+              >
+                <span className="glare-hover inline-flex w-full items-center justify-center rounded-[calc(0.5rem-1px)] bg-accent px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-accent-foreground transition-colors group-hover:bg-accent-bright">
                   Quick Quote
-                </button>
-              </Magnet>
+                </span>
+              </StarBorder>
 
               <button
                 onClick={() => setMobileMenuOpen(true)}

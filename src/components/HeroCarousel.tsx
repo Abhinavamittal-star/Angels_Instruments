@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRFQ } from "@/context/RFQContext";
 import ParticleField from "@/components/reactbits/ParticleField";
-import Magnet from "@/components/reactbits/Magnet";
+import StarBorder from "@/components/reactbits/StarBorder";
 import { GradientText, ShinyText } from "@/components/reactbits/TextEffects";
 
 export default function HeroCarousel() {
@@ -87,15 +87,15 @@ export default function HeroCarousel() {
           </AnimatePresence>
 
           <div className="flex flex-col items-stretch gap-4 pt-2 sm:flex-row sm:items-center">
-            <Magnet>
+            <StarBorder as="span" className="w-full sm:w-auto">
               <Link
                 href={slide.primaryHref}
-                className="group flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-all hover:bg-accent-bright glow-accent"
+                className="glare-hover flex w-full items-center justify-center gap-2 rounded-[calc(0.5rem-1px)] bg-accent px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-colors group-hover:bg-accent-bright"
               >
                 {slide.primaryCTA}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-            </Magnet>
+            </StarBorder>
             <button
               onClick={() => openRFQ()}
               className="rounded-lg border border-border-strong bg-surface/50 px-6 py-3.5 text-center text-sm font-bold uppercase tracking-wider text-foreground backdrop-blur-sm transition-all hover:border-primary-bright hover:bg-surface"

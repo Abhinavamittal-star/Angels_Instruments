@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import RFQModal from "@/components/RFQModal";
 import { RFQProvider } from "@/context/RFQContext";
-import ClickSpark from "@/components/reactbits/ClickSpark";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-geist-sans",
@@ -51,7 +50,6 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
         <RFQProvider>
-          <ClickSpark />
           <Header />
           <main className="flex-grow flex flex-col">{children}</main>
           <Footer />

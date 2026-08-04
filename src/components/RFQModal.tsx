@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, CheckCircle2, Phone, Mail, Clock } from "lucide-react";
 import { useRFQ } from "@/context/RFQContext";
+import StarBorder from "@/components/reactbits/StarBorder";
 
 interface RFQFormData {
   name: string;
@@ -14,6 +15,10 @@ interface RFQFormData {
   instrumentChoice: string;
   message: string;
 }
+
+const inputBase =
+  "w-full rounded-lg border bg-surface-2/60 px-3 py-2 text-sm text-foreground placeholder:text-muted transition-all focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary-bright";
+const labelBase = "block text-[0.6rem] font-bold uppercase tracking-wider text-muted mb-1.5";
 
 export default function RFQModal() {
   const { isOpen, prefilledInstrument, closeRFQ } = useRFQ();
@@ -36,7 +41,6 @@ export default function RFQModal() {
     },
   });
 
-  // Update prefilled field when modal opens/context changes
   useEffect(() => {
     if (isOpen) {
       setValue("instrumentChoice", prefilledInstrument);
@@ -45,7 +49,6 @@ export default function RFQModal() {
   }, [isOpen, prefilledInstrument, setValue]);
 
   const onSubmit = async (data: RFQFormData) => {
-    // Simulate API Request
     await new Promise((resolve) => setTimeout(resolve, 1500));
     console.log("RFQ Submission Data:", data);
     setIsSubmitted(true);
@@ -66,7 +69,7 @@ export default function RFQModal() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
           />
 
           {/* Modal Container */}
@@ -75,47 +78,46 @@ export default function RFQModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl border border-slate-100 flex flex-col md:flex-row"
+            className="glass-panel border-glow-ring relative flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl shadow-2xl md:flex-row"
           >
             {/* Sidebar with Info (visible on desktop) */}
-            <div className="hidden md:flex md:w-1/3 bg-blue-900 text-white p-6 flex-col justify-between relative overflow-hidden">
-              {/* Decorative circle */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-blue-800/40" />
-              <div className="absolute -bottom-10 -left-10 w-24 h-24 rounded-full bg-blue-800/30" />
+            <div className="relative hidden flex-col justify-between overflow-hidden border-r border-border bg-gradient-to-b from-primary/20 via-surface-2 to-surface p-6 md:flex md:w-1/3">
+              <div className="pointer-events-none absolute inset-0 bg-dot-fade opacity-50" />
+              <div className="animate-aurora pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/30 blur-3xl" />
 
               <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-2">Request Quote</h3>
-                <p className="text-blue-100 text-sm leading-relaxed">
+                <h3 className="mb-2 text-xl font-bold text-foreground">Request Quote</h3>
+                <p className="text-sm leading-relaxed text-muted">
                   Submit this form to receive a customized technical proposal and pricing.
                 </p>
               </div>
 
               <div className="relative z-10 space-y-4">
                 <div className="flex items-center gap-3 text-sm">
-                  <Phone className="w-5 h-5 text-amber-400 shrink-0" />
+                  <Phone className="h-5 w-5 shrink-0 text-accent" />
                   <div>
-                    <p className="font-semibold">Call Support</p>
-                    <p className="text-blue-200">+91-97605-77862</p>
-                    <p className="text-blue-200">+91-94121-31200</p>
+                    <p className="font-semibold text-foreground">Call Support</p>
+                    <p className="text-muted">+91-97605-77862</p>
+                    <p className="text-muted">+91-94121-31200</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <Mail className="w-5 h-5 text-amber-400 shrink-0" />
+                  <Mail className="h-5 w-5 shrink-0 text-accent" />
                   <div>
-                    <p className="font-semibold">Email Us</p>
-                    <p className="text-blue-200 break-all">info@angelsinstruments.in</p>
+                    <p className="font-semibold text-foreground">Email Us</p>
+                    <p className="break-all text-muted">info@angelsinstruments.in</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <Clock className="w-5 h-5 text-amber-400 shrink-0" />
+                  <Clock className="h-5 w-5 shrink-0 text-accent" />
                   <div>
-                    <p className="font-semibold">Response Time</p>
-                    <p className="text-blue-200">Within 24 Hours</p>
+                    <p className="font-semibold text-foreground">Response Time</p>
+                    <p className="text-muted">Within 24 Hours</p>
                   </div>
                 </div>
               </div>
 
-              <div className="relative z-10 text-xs text-blue-200">
+              <div className="relative z-10 font-mono text-[0.6rem] uppercase tracking-wider text-muted">
                 ANGELS INSTRUMENTS
                 <br />
                 ISO 9001:2008 Certified
@@ -123,78 +125,52 @@ export default function RFQModal() {
             </div>
 
             {/* Form Content */}
-            <div className="flex-1 p-6 sm:p-8 relative">
+            <div className="relative flex-1 p-6 sm:p-8">
               {/* Close Button */}
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                className="absolute right-4 top-4 rounded-lg p-1.5 text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
                 aria-label="Close"
               >
-                <X className="w-5 h-5" />
+                <X className="h-5 w-5" />
               </button>
 
               {!isSubmitted ? (
                 <>
-                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
-                    Request for Quote
-                  </h2>
-                  <p className="text-slate-500 text-sm mb-6">
-                    ANGELS INSTRUMENTS • High Precision Quality Control
-                  </p>
+                  <h2 className="mb-1 text-xl font-bold text-foreground sm:text-2xl">Request for Quote</h2>
+                  <p className="mb-6 text-sm text-muted">ANGELS INSTRUMENTS • High Precision Quality Control</p>
 
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    {/* Name & Company */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
-                        <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">
-                          Your Name *
-                        </label>
+                        <label className={labelBase}>Your Name *</label>
                         <input
                           type="text"
-                          className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 transition-all ${
-                            errors.name ? "border-red-500 focus:ring-red-500" : "border-slate-200"
-                          }`}
+                          className={`${inputBase} ${errors.name ? "border-red-500/60" : "border-border"}`}
                           placeholder="John Doe"
                           {...register("name", { required: "Name is required" })}
                         />
-                        {errors.name && (
-                          <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
-                        )}
+                        {errors.name && <p className="mt-1 text-[0.65rem] text-red-400">{errors.name.message}</p>}
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">
-                          Company Name *
-                        </label>
+                        <label className={labelBase}>Company Name *</label>
                         <input
                           type="text"
-                          className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 transition-all ${
-                            errors.companyName
-                              ? "border-red-500 focus:ring-red-500"
-                              : "border-slate-200"
-                          }`}
+                          className={`${inputBase} ${errors.companyName ? "border-red-500/60" : "border-border"}`}
                           placeholder="Acme Paper Ltd."
                           {...register("companyName", { required: "Company name is required" })}
                         />
-                        {errors.companyName && (
-                          <p className="text-xs text-red-500 mt-1">
-                            {errors.companyName.message}
-                          </p>
-                        )}
+                        {errors.companyName && <p className="mt-1 text-[0.65rem] text-red-400">{errors.companyName.message}</p>}
                       </div>
                     </div>
 
-                    {/* Email & Phone */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
-                        <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">
-                          Email Address *
-                        </label>
+                        <label className={labelBase}>Email Address *</label>
                         <input
                           type="email"
-                          className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 transition-all ${
-                            errors.email ? "border-red-500 focus:ring-red-500" : "border-slate-200"
-                          }`}
+                          className={`${inputBase} ${errors.email ? "border-red-500/60" : "border-border"}`}
                           placeholder="john@company.com"
                           {...register("email", {
                             required: "Email is required",
@@ -204,104 +180,77 @@ export default function RFQModal() {
                             },
                           })}
                         />
-                        {errors.email && (
-                          <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
-                        )}
+                        {errors.email && <p className="mt-1 text-[0.65rem] text-red-400">{errors.email.message}</p>}
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">
-                          Phone Number *
-                        </label>
+                        <label className={labelBase}>Phone Number *</label>
                         <input
                           type="tel"
-                          className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 transition-all ${
-                            errors.phone ? "border-red-500 focus:ring-red-500" : "border-slate-200"
-                          }`}
+                          className={`${inputBase} ${errors.phone ? "border-red-500/60" : "border-border"}`}
                           placeholder="+91 XXXXX XXXXX"
                           {...register("phone", { required: "Phone number is required" })}
                         />
-                        {errors.phone && (
-                          <p className="text-xs text-red-500 mt-1">{errors.phone.message}</p>
-                        )}
+                        {errors.phone && <p className="mt-1 text-[0.65rem] text-red-400">{errors.phone.message}</p>}
                       </div>
                     </div>
 
-                    {/* Instrument Choice */}
                     <div>
-                      <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">
-                        Selected Instrument / Category *
-                      </label>
+                      <label className={labelBase}>Selected Instrument / Category *</label>
                       <input
                         type="text"
-                        className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 transition-all ${
-                          errors.instrumentChoice
-                            ? "border-red-500 focus:ring-red-500"
-                            : "border-slate-200"
-                        }`}
+                        className={`${inputBase} ${errors.instrumentChoice ? "border-red-500/60" : "border-border"}`}
                         placeholder="e.g. Bursting Strength Tester"
                         {...register("instrumentChoice", {
                           required: "Please specify the instrument you are inquiring about",
                         })}
                       />
-                      {errors.instrumentChoice && (
-                        <p className="text-xs text-red-500 mt-1">
-                          {errors.instrumentChoice.message}
-                        </p>
-                      )}
+                      {errors.instrumentChoice && <p className="mt-1 text-[0.65rem] text-red-400">{errors.instrumentChoice.message}</p>}
                     </div>
 
-                    {/* Message */}
                     <div>
-                      <label className="block text-xs font-semibold uppercase text-slate-500 mb-1.5">
-                        Additional Message / Special Requirements
-                      </label>
+                      <label className={labelBase}>Additional Message / Special Requirements</label>
                       <textarea
                         rows={3}
-                        className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 transition-all"
+                        className={`${inputBase} border-border`}
                         placeholder="Please include details like capacity, size, custom standards, or delivery timelines..."
                         {...register("message")}
                       />
                     </div>
 
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full mt-4 flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-900 font-bold px-5 py-3 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-75 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-                          Processing RFQ...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          Send Quote Request
-                        </>
-                      )}
-                    </button>
+                    <StarBorder type="submit" disabled={isSubmitting} className="mt-4 w-full">
+                      <span className="glare-hover inline-flex w-full items-center justify-center gap-2 rounded-[calc(0.5rem-1px)] bg-accent px-5 py-3 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-colors group-hover:bg-accent-bright">
+                        {isSubmitting ? (
+                          <>
+                            <div className="h-5 w-5 animate-spin rounded-full border-2 border-accent-foreground border-t-transparent" />
+                            Processing RFQ...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="h-4 w-4" />
+                            Send Quote Request
+                          </>
+                        )}
+                      </span>
+                    </StarBorder>
                   </form>
                 </>
               ) : (
-                <div className="flex flex-col items-center justify-center text-center py-12 px-4 h-full">
+                <div className="flex h-full flex-col items-center justify-center px-4 py-12 text-center">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center text-green-600 mb-4 border border-green-100"
+                    className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400"
                   >
-                    <CheckCircle2 className="w-10 h-10" />
+                    <CheckCircle2 className="h-10 w-10" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Quote Request Sent!</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed max-w-sm mb-8">
-                    Thank you for contacting Angels Instruments. Our technical sales team is
-                    reviewing your specifications and will respond with an official quotation within
-                    24 hours.
+                  <h3 className="mb-2 text-2xl font-bold text-foreground">Quote Request Sent!</h3>
+                  <p className="mb-8 max-w-sm text-sm leading-relaxed text-muted">
+                    Thank you for contacting Angels Instruments. Our technical sales team is reviewing your specifications and will respond with an official quotation within 24 hours.
                   </p>
                   <button
                     onClick={handleClose}
-                    className="bg-blue-900 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg transition-colors shadow-md"
+                    className="rounded-lg bg-primary px-6 py-2 font-semibold text-primary-foreground transition-colors hover:bg-primary-bright glow-primary"
                   >
                     Close Window
                   </button>
