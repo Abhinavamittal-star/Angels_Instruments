@@ -55,9 +55,7 @@ export default function HeroCarousel() {
     <div className="relative flex h-[560px] w-full items-center overflow-hidden bg-background sm:h-[640px]">
       {/* Animated particle field + aurora glows */}
       <ParticleField color="56, 189, 248" density={80} />
-      <div className="magic-rings pointer-events-none" />
-      <div className="magic-rings-arc pointer-events-none" />
-      <div className="laser-bars pointer-events-none" />
+      <div className="magic-rings-arc pointer-events-none opacity-50" />
       <div className="pointer-events-none absolute inset-0 bg-grid-fade opacity-70" />
       <div className="animate-aurora pointer-events-none absolute -left-32 top-0 h-[36rem] w-[36rem] rounded-full bg-primary/20 blur-[120px]" />
       <div className="animate-aurora pointer-events-none absolute -right-24 bottom-0 h-[30rem] w-[30rem] rounded-full bg-glow-b/20 blur-[120px] [animation-delay:-9s]" />

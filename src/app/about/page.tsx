@@ -47,6 +47,7 @@ export default function About() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="aurora"
         eyebrow="About Our Company"
         title="Corporate Profile & History"
         description="A highly renowned name — ANGELS INSTRUMENTS is a reputed manufacturer of Pulp, Paper, Board, Packaging, Textile and Pharmacy Lab testing equipment."

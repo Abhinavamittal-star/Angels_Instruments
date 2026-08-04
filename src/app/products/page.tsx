@@ -12,6 +12,7 @@ export default function ProductsPage() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="beams"
         eyebrow="Instruments Catalog"
         title="Quality Control Testing Equipment"
         description="Find the exact laboratory equipment you need. Filter by product family or search by model name, standards, or features."

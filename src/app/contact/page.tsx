@@ -38,6 +38,7 @@ export default function ContactPage() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="particles"
         eyebrow="Contact Support"
         title="Get in Touch With Our Team"
         description="Reach out to SALEHEEN SIDDIQUI and our engineering team for quotes, custom specs, and technical assistance."

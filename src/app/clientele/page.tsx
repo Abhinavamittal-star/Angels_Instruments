@@ -67,6 +67,7 @@ export default function ClientelePage() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="waves"
         eyebrow="Clientele / Reputed Clients"
         title="Trusted by India's Leading Institutions"
         description="We take pride in having a long list of satisfied customers who always look up to us for their various requirements. Below are the names of a few of our major clients who reflect the goodwill we have generated over the years."
