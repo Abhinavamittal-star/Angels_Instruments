@@ -201,6 +201,126 @@ body {
   animation: pulse-ring 2.4s ease-out infinite;
 }
 
+/* ---------- Star Border (stable animated border for buttons) ---------- */
+@keyframes star-trail {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.star-border-trail {
+  animation: star-trail 4s linear infinite;
+}
+.star-border-trail-2 {
+  animation: star-trail 6s linear infinite reverse;
+}
+.star-border > *:last-child {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+.star-border {
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.star-border:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- Border glow (revealed on hover for cards) ---------- */
+.border-glow-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle),
+    transparent 0%,
+    var(--glow-a) 12%,
+    var(--glow-b) 26%,
+    var(--glow-c) 38%,
+    transparent 52%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-spin 5s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+.group:hover .border-glow-hover::before {
+  opacity: 1;
+}
+
+/* ---------- Gradient Waves backdrop ---------- */
+@keyframes waves-drift {
+  0%, 100% { background-position: 0% 50%, 100% 50%; }
+  50% { background-position: 100% 50%, 0% 50%; }
+}
+.bg-gradient-waves {
+  background:
+    radial-gradient(ellipse 80% 55% at 20% 100%, rgba(99, 102, 241, 0.30), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 85% 15%, rgba(56, 189, 248, 0.22), transparent 55%);
+  background-size: 200% 200%, 200% 200%;
+  animation: waves-drift 16s ease-in-out infinite;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 55%, transparent 100%);
+}
+
+/* ---------- Beams backdrop ---------- */
+@keyframes beams-slide {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -220px; }
+}
+.bg-beams {
+  background-image: repeating-linear-gradient(
+    100deg,
+    transparent 0 40px,
+    rgba(56, 189, 248, 0.05) 40px 41px,
+    transparent 41px 120px
+  );
+  animation: beams-slide 8s linear infinite;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, #000 40%, transparent 100%);
+}
+
+/* ---------- Grid Scan backdrop ---------- */
+.bg-grid-scan {
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.10) 1px, transparent 1px);
+  background-size: 2.75rem 2.75rem;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 45%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 45%, transparent 100%);
+}
+@keyframes scan-sweep {
+  0% { transform: translateY(-100%); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(1200%); opacity: 0; }
+}
+.scan-line {
+  background: linear-gradient(to bottom, transparent, rgba(56, 189, 248, 0.18), transparent);
+  animation: scan-sweep 7s ease-in-out infinite;
+}
+
+/* ---------- Glare hover sweep ---------- */
+.glare-hover {
+  position: relative;
+  overflow: hidden;
+}
+.glare-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.12) 48%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.glare-hover:hover::after {
+  transform: translateX(120%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-aurora,
   .animate-shine,
@@ -208,7 +328,13 @@ body {
   .animate-float-slow,
   .animate-marquee,
   .animate-pulse-ring,
-  .border-glow-ring::before {
+  .border-glow-ring::before,
+  .border-glow-hover::before,
+  .star-border-trail,
+  .star-border-trail-2,
+  .bg-gradient-waves,
+  .bg-beams,
+  .scan-line {
     animation: none !important;
   }
 }

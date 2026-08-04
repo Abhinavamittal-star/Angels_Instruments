@@ -6,7 +6,7 @@ import { Phone, Mail, MapPin, Award, MessageSquare } from "lucide-react";
 import { CATEGORIES } from "@/data/products";
 import { useRFQ } from "@/context/RFQContext";
 import AngelsLogo from "@/components/AngelsLogo";
-import Magnet from "@/components/reactbits/Magnet";
+import StarBorder from "@/components/reactbits/StarBorder";
 
 export default function Footer() {
   const { openRFQ } = useRFQ();
@@ -25,14 +25,11 @@ export default function Footer() {
               We design and manufacture customized test equipment conforming to specific TAPPI, ASTM, ISO, and SCAN standards. Contact our engineering team for support.
             </p>
           </div>
-          <Magnet>
-            <button
-              onClick={() => openRFQ()}
-              className="shrink-0 rounded-lg bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-all hover:bg-accent-bright glow-accent"
-            >
+          <StarBorder onClick={() => openRFQ()} className="shrink-0">
+            <span className="glare-hover inline-flex w-full items-center justify-center rounded-[calc(0.5rem-1px)] bg-accent px-6 py-3 text-sm font-bold uppercase tracking-wider text-accent-foreground transition-colors group-hover:bg-accent-bright">
               Get a Quote Now
-            </button>
-          </Magnet>
+            </span>
+          </StarBorder>
         </div>
       </div>
 
