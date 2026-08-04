@@ -47,6 +47,7 @@ export default function About() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="aurora"
         eyebrow="About Our Company"
         title="Corporate Profile & History"
         description="A highly renowned name — ANGELS INSTRUMENTS is a reputed manufacturer of Pulp, Paper, Board, Packaging, Textile and Pharmacy Lab testing equipment."
@@ -97,7 +98,7 @@ export default function About() {
                   {stats.map((s) => (
                     <div key={s.label} className="space-y-1">
                       <p className="text-2xl font-bold text-primary-bright">
-                        {s.display ? s.display : <CountUp to={s.value} suffix={s.suffix} duration={2} />}
+                        {s.display ? s.display : <CountUp to={s.value} suffix={s.suffix} duration={4.5} />}
                       </p>
                       <p className="font-mono text-[0.6rem] font-bold uppercase tracking-wider text-muted">{s.label}</p>
                     </div>

@@ -67,6 +67,7 @@ export default function ClientelePage() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="waves"
         eyebrow="Clientele / Reputed Clients"
         title="Trusted by India's Leading Institutions"
         description="We take pride in having a long list of satisfied customers who always look up to us for their various requirements. Below are the names of a few of our major clients who reflect the goodwill we have generated over the years."
@@ -81,7 +82,7 @@ export default function ClientelePage() {
               <div className="space-y-1 text-center">
                 <p className="text-3xl font-bold sm:text-4xl">
                   <GradientText>
-                    <CountUp to={s.value} suffix={s.suffix} duration={2} />
+                    <CountUp to={s.value} suffix={s.suffix} duration={4.5} />
                   </GradientText>
                 </p>
                 <p className="font-mono text-[0.6rem] font-bold uppercase tracking-wider text-muted sm:text-xs">{s.label}</p>

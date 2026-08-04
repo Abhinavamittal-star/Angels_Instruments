@@ -42,6 +42,7 @@ export default function AchievementsPage() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="grid"
         eyebrow="Corporate Credentials"
         title="Quality Certifications & Achievements"
         description="Trusted by leading research institutions like CPPRI and IIT Roorkee. ISO 9001:2008 certified by KVQA, Norway."

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,9 +14,10 @@ import {
   Award,
   MessageSquare,
   ArrowRight,
+  CornerDownLeft,
 } from "lucide-react";
 import AngelsLogo from "@/components/AngelsLogo";
-import { CATEGORIES } from "@/data/products";
+import { CATEGORIES, PRODUCTS } from "@/data/products";
 import { useRFQ } from "@/context/RFQContext";
 import StarBorder from "@/components/reactbits/StarBorder";
 
@@ -29,6 +30,8 @@ export default function Header() {
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [desktopSearchOpen, setDesktopSearchOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -39,14 +42,52 @@ export default function Header() {
   useEffect(() => {
     setMobileMenuOpen(false);
     setProductsDropdownOpen(false);
+    setDesktopSearchOpen(false);
+    setMobileSearchOpen(false);
   }, [pathname]);
+
+  // Live search across ALL instruments — including pilot plant units — updated
+  // on every keystroke. Ranked so name matches surface before category matches.
+  const searchResults = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return [];
+    return PRODUCTS.map((p) => {
+      const name = p.name.toLowerCase();
+      let score = -1;
+      if (name.startsWith(q)) score = 0;
+      else if (name.includes(q)) score = 1;
+      else if (p.tagline.toLowerCase().includes(q)) score = 2;
+      else if (p.category.toLowerCase().includes(q)) score = 3;
+      else if (p.description.toLowerCase().includes(q)) score = 4;
+      return { product: p, score };
+    })
+      .filter((r) => r.score >= 0)
+      .sort((a, b) => a.score - b.score)
+      .slice(0, 8)
+      .map((r) => r.product);
+  }, [searchQuery]);
+
+  const goToProduct = (id: string) => {
+    setSearchQuery("");
+    setDesktopSearchOpen(false);
+    setMobileSearchOpen(false);
+    setMobileMenuOpen(false);
+    router.push(`/products/${id}`);
+  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery("");
+    const q = searchQuery.trim();
+    if (!q) return;
+    // Enter on a single match jumps straight to that instrument.
+    if (searchResults.length === 1) {
+      goToProduct(searchResults[0].id);
+      return;
     }
+    router.push(`/products?search=${encodeURIComponent(q)}`);
+    setSearchQuery("");
+    setDesktopSearchOpen(false);
+    setMobileSearchOpen(false);
   };
 
   const navLinks = [
@@ -109,22 +150,78 @@ export default function Header() {
             </Link>
 
             {/* Search (Desktop) */}
-            <form onSubmit={handleSearchSubmit} className="relative hidden max-w-md flex-1 items-center md:flex">
-              <input
-                type="text"
-                placeholder="Search lab instruments..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-full border border-border bg-surface/70 py-2 pl-4 pr-10 text-sm text-foreground placeholder:text-muted transition-all focus:border-primary-bright focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40"
-              />
-              <button
-                type="submit"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-primary-bright"
-                aria-label="Search"
-              >
-                <Search className="h-4 w-4" />
-              </button>
-            </form>
+            <div className="relative hidden max-w-md flex-1 md:block">
+              <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+                <input
+                  type="text"
+                  placeholder="Search lab instruments..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setDesktopSearchOpen(true);
+                  }}
+                  onFocus={() => setDesktopSearchOpen(true)}
+                  onBlur={() => setTimeout(() => setDesktopSearchOpen(false), 150)}
+                  className="w-full rounded-full border border-border bg-surface/70 py-2 pl-4 pr-10 text-sm text-foreground placeholder:text-muted transition-all focus:border-primary-bright focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/40"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-primary-bright"
+                  aria-label="Search"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
+              </form>
+
+              <AnimatePresence>
+                {desktopSearchOpen && searchQuery.trim() && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    className="glass-panel absolute left-0 right-0 top-full z-50 mt-2 max-h-[26rem] overflow-y-auto rounded-xl py-2 shadow-2xl"
+                  >
+                    {searchResults.length > 0 ? (
+                      <>
+                        <div className="border-b border-border px-4 pb-1.5 font-mono text-[0.6rem] uppercase tracking-wider text-muted">
+                          {searchResults.length} instrument{searchResults.length === 1 ? "" : "s"} found
+                        </div>
+                        {searchResults.map((p) => (
+                          <button
+                            key={p.id}
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => goToProduct(p.id)}
+                            className="flex w-full items-center justify-between gap-3 px-4 py-2 text-left transition-colors hover:bg-surface-2"
+                          >
+                            <span className="min-w-0">
+                              <span className="block truncate text-xs font-bold text-foreground">{p.name}</span>
+                              <span className="block truncate font-mono text-[0.6rem] uppercase tracking-wider text-muted">
+                                {p.category}
+                              </span>
+                            </span>
+                            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-primary-bright" />
+                          </button>
+                        ))}
+                        <div className="mt-1 border-t border-border pt-1">
+                          <button
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={handleSearchSubmit}
+                            className="flex w-full items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold text-primary-bright transition-colors hover:bg-primary/10"
+                          >
+                            <CornerDownLeft className="h-3.5 w-3.5" />
+                            View all results for &ldquo;{searchQuery.trim()}&rdquo;
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="px-4 py-4 text-center text-xs text-muted">
+                        No instruments match &ldquo;{searchQuery.trim()}&rdquo;.
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Pill Nav (Desktop) */}
             <nav className="hidden items-center gap-1 rounded-full border border-border bg-surface/50 p-1 xl:flex">
@@ -267,18 +364,47 @@ export default function Header() {
                   </button>
                 </div>
 
-                <form onSubmit={handleSearchSubmit} className="relative mt-4">
-                  <input
-                    type="text"
-                    placeholder="Search instruments..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-surface/70 py-2 pl-3 pr-8 text-xs text-foreground placeholder:text-muted focus:border-primary-bright focus:outline-none focus:ring-2 focus:ring-primary/40"
-                  />
-                  <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-muted" aria-label="Search">
-                    <Search className="h-4 w-4" />
-                  </button>
-                </form>
+                <div className="mt-4">
+                  <form onSubmit={handleSearchSubmit} className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search instruments..."
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        setMobileSearchOpen(true);
+                      }}
+                      className="w-full rounded-lg border border-border bg-surface/70 py-2 pl-3 pr-8 text-xs text-foreground placeholder:text-muted focus:border-primary-bright focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    />
+                    <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-muted" aria-label="Search">
+                      <Search className="h-4 w-4" />
+                    </button>
+                  </form>
+
+                  {mobileSearchOpen && searchQuery.trim() && (
+                    <div className="mt-2 max-h-56 overflow-y-auto rounded-lg border border-border bg-surface-2/60 py-1">
+                      {searchResults.length > 0 ? (
+                        searchResults.map((p) => (
+                          <button
+                            key={p.id}
+                            onClick={() => goToProduct(p.id)}
+                            className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left transition-colors hover:bg-surface-2"
+                          >
+                            <span className="min-w-0">
+                              <span className="block truncate text-xs font-bold text-foreground">{p.name}</span>
+                              <span className="block truncate font-mono text-[0.55rem] uppercase tracking-wider text-muted">
+                                {p.category}
+                              </span>
+                            </span>
+                            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-primary-bright" />
+                          </button>
+                        ))
+                      ) : (
+                        <p className="px-3 py-3 text-center text-[0.7rem] text-muted">No instruments found.</p>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 <nav className="mt-6 flex flex-col gap-3">
                   {navLinks.map((link) => (

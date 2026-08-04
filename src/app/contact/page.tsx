@@ -38,6 +38,7 @@ export default function ContactPage() {
   return (
     <div className="flex w-full flex-col">
       <PageHero
+        variant="particles"
         eyebrow="Contact Support"
         title="Get in Touch With Our Team"
         description="Reach out to SALEHEEN SIDDIQUI and our engineering team for quotes, custom specs, and technical assistance."
@@ -197,15 +198,15 @@ export default function ContactPage() {
             {/* Live Google Map — factory location */}
             <div className="relative h-[240px] overflow-hidden rounded-2xl border border-border bg-surface-2">
               <iframe
-                title="Angels Instruments location on Google Maps"
-                src="https://maps.google.com/maps?q=XGWM%2B2XX%20Chilkana%20Road%2C%20Khatakheri%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001&z=15&output=embed"
+                title="Alfa Engineering (Angels Instruments) location on Google Maps"
+                src="https://maps.google.com/maps?q=Alfa%20Engineering%2C%20XGWM%2B2XX%20Chilkana%20Rd%2C%20near%20Brown%20Wood%20school%2C%20Khatakheri%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001&z=16&output=embed"
                 className="absolute inset-0 h-full w-full border-0 opacity-90 [filter:invert(0.9)_hue-rotate(180deg)]"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
               />
               <a
-                href="https://maps.google.com/maps?q=XGWM%2B2XX%20Chilkana%20Road%2C%20Khatakheri%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001"
+                href="https://maps.google.com/maps?q=Alfa%20Engineering%2C%20XGWM%2B2XX%20Chilkana%20Rd%2C%20near%20Brown%20Wood%20school%2C%20Khatakheri%2C%20Saharanpur%2C%20Uttar%20Pradesh%20247001"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute bottom-3 right-3 z-10 rounded-lg border border-border-strong bg-surface/90 px-3 py-1.5 font-mono text-[0.6rem] font-bold uppercase tracking-wide text-foreground backdrop-blur-sm transition-colors hover:border-primary-bright"
